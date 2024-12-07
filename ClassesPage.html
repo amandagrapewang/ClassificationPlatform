@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>易签</title>
+    <link rel="shortcut icon" href="./img/school.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/General.css" />
+    <link rel="stylesheet" type="text/css" href="css/Classes.css" />
+    <!-- 引入swipercss文件 -->
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+</head>
+
+<body>
+    <div id="mainframe">
+        <!-- 我来组成头部 -->
+        <nav class="navbar navbar-inverse  navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">签到系统</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="ClassesPage.html">查看班级列表</a></li>
+                    <li><a href="HistorySign.html">签到记录</a></li>
+                    <li><a data-toggle="modal" data-target="#feedModal">反馈</a></li>
+                    <li><a href="MinePage.html">个人中心</a></li>
+                    <li><a @click="logout">登出</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- 我来组成身体 -->
+        <div class="container-fluid">
+            <div class="row">
+                <!-- 我来组成手臂 -->
+                <div class="col-md-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        <li><a href="HomePage.html">首页</a></li>
+                        <li><a href="SignPage.html">开始签到</a></li>
+                        <li class="active"><a href="ClassesPage.html">课程表</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-offset-2 col-md-10 main">
+                    <div class="container">
+                        <div class="row">
+                            <h2 class="page-header" v-cloak><span class="glyphicon glyphicon-ice-lolly-tasted"
+                                    style="font-size: 18px;"></span>&nbsp{{UserName}}，欢迎您！
+                                <small><i>Check out my class!</i></small>
+                            </h2>
+                        </div>
+
+                        <div class="my-swiper">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide"><img src="./img/beiqu.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg1.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg2.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg3.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg4.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg6.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/bg7.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/nanqu.jpg"></div>
+                                    <div class="swiper-slide"><img src="./img/SZTUbig.jpg"></div>
+                                </div>
+                                <!-- Add Pagination -->
+                                <div class="swiper-pagination"></div>
+                                <!-- Add Arrows -->
+                                <div class="swiper-button-next"></div>
+                                <div class="swiper-button-prev"></div>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 20px;" />
+                        <!--功能选择模块-->
+                        <div>
+                            <table border="1" class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>课程ID</th>
+                                        <th>专业名</th>
+                                        <th>课程名</th>
+                                        <th>开始时间</th>
+                                        <th>学时</th>
+                                        <th>地点</th>
+                                        <th>学生信息上传</th>
+                                        <th>学生信息</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- 使用 v-for 渲染课程数据 -->
+                                    <tr v-for="(row, rowIndex) in classestable" :key="rowIndex">
+                                        <td>{{ row.courseID }}</td>
+                                        <td>{{ row.majorName }}</td>
+                                        <td>{{ row.courseName }}</td>
+                                        <td>{{ row.beginTime }}</td>
+                                        <td>{{ row.hours }}</td>
+                                        <td>{{ row.courseLocation }}</td>
+                                        <td>
+                                            <input type="file" @change="getFile($event)"
+                                                style="display: inline-block; margin-top: 0;">
+                                            <button @click="uploadFile(row.courseID)"
+                                                style="display: inline-block; margin-top: 0; margin-left: 10px;">上传文件</button>
+                                        </td>
+                                        <td>
+                                            <button @click="StuDetails(row.courseID)" data-toggle="modal"
+                                                data-target="#myModal">查看</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row center-block generalBox">
+
+                        </div>
+                        <div class="clearfix" style="height: 5px;"></div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="feedModal" tabindex="-1" role="dialog" aria-labelledby="feedModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="feedModalLabel">反馈问题</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <textarea class="form-control" rows="5" placeholder="请描述您的问题"></textarea>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                                    <button type="button" class="btn btn-primary" @click="seeSuccess">提交反馈</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">学生信息表</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <table border="1" class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>学号</th>
+                                                    <th>学生姓名</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- 使用 v-for 渲染学生数据 -->
+                                                <tr v-for="(row, rowIndex) in studentList" :key="rowIndex">
+                                                    <td>{{ row.roleID }}</td>
+                                                    <td>{{ row.roleName }}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+    <script src="js/App/ClassesFunction.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            pagination: '.swiper-pagination',
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            paginationClickable: true,
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            spaceBetween: 30
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<title>易签</title>
+	<link rel="stylesheet" href="css/bootstrap.css" />
+	<link rel="stylesheet" type="text/css" href="css/Sign.css" />
+	<link rel="shortcut icon" href="./img/school.ico" type="image/x-icon">
+</head>
+
+<body>
+	<div id="main" class="container-fluid">
+		<div class="row InputBox center-block">
+			<h1 style="font-size: 50px; color:rgb( 0,132,255); text-align: center;">易签</h1>
+			<hr />
+			<div class="row FormBox">
+				<div class="input-group ">
+					<div class="input-group-btn ">
+						<button type="button" class="btn btn-default dropdown-toggle FormInput"
+							style="width: 150px;height: 45px;margin-bottom: 0;" data-toggle="dropdown"
+							aria-haspopup="true" aria-expanded="false">{{Identity}} <span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li><a @click="toTea">教师</a></li>
+							<li><a @click="toAdmi">管理员</a></li>
+							<li><a @click="toStu">学生</a></li>
+						</ul>
+					</div>
+					<input type="text" class="form-control FormInput" v-model="UserID" placeholder="选择您的身份以填写相应ID" />
+				</div>
+				<input type="password" class="form-control FormInput" style="margin-top: 35px;" placeholder="填写密码"
+					v-model="pwd" @keyup.enter="Sign" />
+			</div>
+			<span>还没有账号？<a href="Register.html">注册</a></span>
+			<div class="clearfix" style="height: 15px;"></div>
+			<button class="btn btn-lg btn-block btn-primary SignBtn" style="margin-bottom: 10px;"
+				@click="Sign">登录</button>
+		</div>
+	</div>
+	<script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+	<script type="text/javascript" src="js/vue.js"></script>
+	<script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+	<script src="js/App/LoginFunction.js"></script>
+</body>
+
+</html>

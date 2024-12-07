@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>易签</title>
+    <link rel="stylesheet" href="css/bootstrap.css" />
+    <link rel="shortcut icon" href="./img/school.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .container-fluid {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control {
+            margin-bottom: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        input::placeholder {
+            color: #888;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main" class="container-fluid">
+        <h1>学生签到</h1>
+        <form @submit.prevent="submitForm">
+            <div class="form-group">
+                <input v-model="roleID" type="text" class="form-control" placeholder="请输入学号" />
+            </div>
+            <div class="form-group">
+                <input v-model="roleName" type="text" class="form-control" placeholder="请输入姓名" />
+            </div>
+            <button type="submit" class="btn">签到</button>
+        </form>
+    </div>
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/bootstrap.js"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+    <script>
+        new Vue({
+            el: '#main',
+            data() {
+                return {
+                    roleID: '',
+                    roleName: '',
+                };
+            },
+            methods: {
+                submitForm() {
+                    // 创建一个学生签到信息对象
+                    const studentInfo = {
+                        roleID: this.roleID,
+                        roleName: this.roleName,
+                        stuSignState: '已签到',
+                    };
+
+                    // 获取已有的签到数据，若无则初始化为空数组
+                    let studentList = JSON.parse(localStorage.getItem('studentList')) || [];
+
+                    const existingStudentIndex = studentList.findIndex(student => student.roleID === this.roleID && student.roleName === this.roleName);
+
+                    if (existingStudentIndex !== -1) {
+                        // 如果该学生已存在，直接更新其签到状态为“已签到”
+                        studentList[existingStudentIndex].stuSignState = '已签到';
+                    } else {
+                        // 如果该学生信息不存在，则添加新的学生签到信息
+                        alert("学号或姓名错误！")  // 这里直接把学生信息添加到数组中
+                    }
+
+                    // 将更新后的数据存回 localStorage
+                    localStorage.setItem('studentList', JSON.stringify(studentList));
+
+                    // 提示用户签到成功
+                    alert('签到成功');
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

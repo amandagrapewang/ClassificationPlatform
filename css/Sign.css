@@ -1,0 +1,51 @@
+#main {
+	position: absolute;
+	top: -40px;
+	bottom: 0;
+	width: 100%;
+	background: url(../img/Backgroundpic.jpg) no-repeat top left;
+	background-size: cover;
+
+}
+
+.InputBox {
+	margin-top: 120px;
+	width: 600px;
+	padding: 50px;
+	padding-bottom: 20px;
+	background-color: rgba(255, 255, 255, .8);
+	border-radius: 10px;
+	box-shadow: 0 0 10px gainsboro;
+}
+
+.FormBox {
+	margin-top: 15px;
+}
+
+.FormInput {
+	height: 45px;
+	margin: 30px 0;
+}
+
+.SignBtn {
+	margin-top: 15px;
+	width: 530px;
+	margin-left: -12px;
+	outline: none;
+}
+
+.input-group .captcha-img {
+	width: 100px;
+	display: table-cell;
+	/* 使用浮动使得图片和输入框在同一行 */
+	text-align: center;
+	background-color: seagreen;
+	font-size: 20px;
+	font-weight: bold;
+	color: black;
+	border: 1px solid seagreen;
+	vertical-align: middle;
+	border-top-left-radius: 4px;
+	border-bottom-left-radius: 4px;
+	/* 图片和输入框之间的间距 */
+}

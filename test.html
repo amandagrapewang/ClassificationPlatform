@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>易签</title>
+    <link rel="shortcut icon" href="./img/school.ico" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/General.css" />
+    <!-- 引入swipercss文件 -->
+    <link rel="stylesheet" type="text/css" href="css/swiper.min.css">
+</head>
+
+<body>
+    <div id="main">
+        <input v-model="text" placeholder="请输入内容" />
+        <button @click="Signing">生成二维码</button>
+        <br />
+        <div id="qrcode"></div>
+    </div>
+
+    <script src="js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-resource/1.5.1/vue-resource.js"></script>
+    <script type="text/javascript" src="js/swiper.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+
+    <script>
+        var vm = new Vue({
+            el: '#main',
+            data: {
+                text: ''
+            },
+            methods: {
+                Signing() {
+                    const url = this.text || "https://www.baidu.com/";
+                    $('#qrcode').empty();
+                    this.makeQRCode(url);
+                },
+                makeQRCode(url) {
+                    const canvas = document.createElement("canvas");
+                    document.getElementById("qrcode").appendChild(canvas);
+                    QRCode.toCanvas(canvas, url, { width: 128, height: 128 }, function (error) {
+                        if (error) {
+                            console.error(error);
+                        } else {
+                            console.log("二维码生成成功！");
+                        }
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
